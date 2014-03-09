@@ -86,17 +86,15 @@ var boardWidget = {
     var add_edit_link = function() {
       $(".edit_story").click(function(event) {
         event.preventDefault();
-        $.showDialog("add_story_dialog.html?story_id=" + $(event.target).attr("id"), {
-          load: function(elem) {
-            storyWidget.initialise({
-              storyId: $(event.target).attr("id") || undefined,
-              board: $.widgets.board,
-              // I don't like this - relies on $.widgets.target being set (which will normally, but not necessarily, be the case)
-              default_target: $.widgets.target.get_current_target() | "All",
-              targets_collection: $.widgets.target.get_collection()
-            });
-          }
+        $("#dialog").show();
+        storyWidget.initialise({
+          storyId: $(event.target).attr("id") || undefined,
+          board: $.widgets.board,
+          // I don't like this - relies on $.widgets.target being set (which will normally, but not necessarily, be the case)
+          default_target: $.widgets.target.get_current_target() | "All",
+          targets_collection: $.widgets.target.get_collection()
         });
+
       });
     };
 

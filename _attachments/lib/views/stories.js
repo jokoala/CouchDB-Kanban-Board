@@ -103,6 +103,7 @@ var FullStoryView = Backbone.View.extend({
     _.bindAll(this, "render", "save", "update");
     // explicitly bind the save for now...
     $('#save').bind("click", this.save);
+    $('#cancel').bind("click", this.cancel);
 
     this.model = options.model || new StoryModel();
     this.model.bind("change", this.render);
@@ -114,9 +115,9 @@ var FullStoryView = Backbone.View.extend({
 
   render: function() {
     if (this.model.isNew()){
-      $("#dialog_title").html("Edit story:");
-    } else {
       $("#dialog_title").html("Add story:");
+    } else {
+      $("#dialog_title").html("Edit story:");
     }
     $("#story_name").val(this.model.get("story_name"));
     $("#description").val(this.model.get("story_description"));
@@ -148,6 +149,7 @@ var FullStoryView = Backbone.View.extend({
       $.log("Cannot create target selector as widget not loaded");
     }
 
+    $('#story_state').empty();
     _.each($.widgets.board.states.collection.models, function(state){
       if (state.get('id') == this.model.get('story_state')) {
         $('#story_state').append('<option selected="selected" value="' + state.get('id') + '">' + state.get('name') + '</option>');
@@ -166,10 +168,19 @@ var FullStoryView = Backbone.View.extend({
     var previousAttributes = this.model.toJSON();
     this.update();
     this.model.save(undefined);
-    $("#dialog").fadeOut("fast", function() {
-      $("#dialog, #overlay, #overlay-frame").remove();
-    });
+    $("#dialog").hide();
+    $("#save").unbind();
+    $("#cancel").unbind();
+    //$("#dialog").fadeOut("fast", function() {
+    //  $("#dialog, #overlay, #overlay-frame").remove();
+    //});
     $(document).unbind("keydown");
+  },
+
+  cancel: function() {
+      $("#dialog").hide();
+      $("#save").unbind();
+      $("#cancel").unbind();
   },
 
   update: function() {

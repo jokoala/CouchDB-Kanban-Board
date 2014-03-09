@@ -1,6 +1,8 @@
 // Define the model class
 var StoryModel = Backbone.Model.extend({
   initialize: function(story) {
+    $.log("model init");
+    $.log(story);
     this.set({
       // do I need id or _id? will have both for now....
       _id: story._id || undefined,

@@ -3,6 +3,8 @@
 //
 var storyWidget = {
   initialise : function(options) {
+    $.log("init");
+    $.log(options.storyId);
     var storyModel = new StoryModel({id: options.storyId});
     var storyView = new FullStoryView({
       model: storyModel,
