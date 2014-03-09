@@ -15,6 +15,7 @@ var TagsView = Backbone.View.extend({
   },
   render: function() {
     $("#tag_cloud").empty();
+                $("#tag_cloud").append('<a class="tagcloud" href="#tag=">any</a> ');
 		var data = this.collection.models;
 		if (this.board_target) {
 		  var sorted_data = this.sort_tags(data, this.board_target.get_current_target());
